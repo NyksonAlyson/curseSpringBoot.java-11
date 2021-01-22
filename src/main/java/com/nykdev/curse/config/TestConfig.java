@@ -3,8 +3,6 @@ package com.nykdev.curse.config;
 import java.time.Instant;
 
 import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.nykdev.curse.entities.Category;
 import com.nykdev.curse.entities.Order;
+import com.nykdev.curse.entities.OrderItem;
 import com.nykdev.curse.entities.Product;
 import com.nykdev.curse.entities.User;
 import com.nykdev.curse.entities.enums.OrderStatus;
 import com.nykdev.curse.repositories.CategoryRepository;
+import com.nykdev.curse.repositories.OrderItemRepository;
 import com.nykdev.curse.repositories.OrderRepository;
 import com.nykdev.curse.repositories.ProductRepository;
 import com.nykdev.curse.repositories.UserRepository;
@@ -33,6 +33,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -72,6 +75,13 @@ public class TestConfig implements CommandLineRunner {
 		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"),OrderStatus.WATTNG_PAYMENT, u1); 
 	
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3));
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
+
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 	}
 
 }
