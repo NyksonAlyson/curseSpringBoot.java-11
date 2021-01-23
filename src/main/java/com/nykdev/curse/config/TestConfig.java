@@ -1,8 +1,8 @@
 package com.nykdev.curse.config;
 
 import java.time.Instant;
-
 import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.nykdev.curse.entities.Category;
 import com.nykdev.curse.entities.Order;
 import com.nykdev.curse.entities.OrderItem;
+import com.nykdev.curse.entities.Payment;
 import com.nykdev.curse.entities.Product;
 import com.nykdev.curse.entities.User;
 import com.nykdev.curse.entities.enums.OrderStatus;
@@ -82,6 +83,12 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
 
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"),o1);
+		o1.setPayment(pay1);
+		
+		orderRepository.save(o1);
+		
 	}
 
 }

@@ -44,6 +44,11 @@ public User(long id, String name, String email, String phone, String password) {
 	this.phone = phone;
 	this.password = password;
 }
+
+public User() {
+	
+	
+}
 public User(String name, String email, String phone, String password) {
 	super();
 	
