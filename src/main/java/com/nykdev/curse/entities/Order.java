@@ -21,11 +21,13 @@ import com.nykdev.curse.entities.enums.OrderStatus;
 public class Order implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone ="GMT" )
 	private Instant moment;
+	
 	private Integer orderStatus;
 	
 	@ManyToOne
@@ -33,7 +35,7 @@ public class Order implements Serializable {
 	private User client;
 	
 	@OneToMany(mappedBy ="id.order" )
-	private Set<OrderItem> itens = new HashSet<>();
+	private Set<OrderItem> items = new HashSet<>();
 	
 	
 	public Order() {
@@ -83,7 +85,7 @@ public class Order implements Serializable {
 	}
 
 	public Set<OrderItem> getitItens(){
-		return itens;	
+		return items;	
 	}
 	
 	@Override
