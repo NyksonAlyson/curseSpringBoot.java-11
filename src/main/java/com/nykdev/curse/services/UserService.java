@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nykdev.curse.entities.User;
 import com.nykdev.curse.repositories.UserRepository;
+import com.nykdev.curse.services.exception.ResourceNotFoundException;
 
  @Service
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 	
 	public User findById(long id) {
 		Optional<User> obj = repository.findById(id);
-			return obj.get();
+			return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 			
 	}
 	
