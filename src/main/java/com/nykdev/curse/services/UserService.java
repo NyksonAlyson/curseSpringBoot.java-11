@@ -3,6 +3,8 @@ package com.nykdev.curse.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,6 +13,8 @@ import com.nykdev.curse.entities.User;
 import com.nykdev.curse.repositories.UserRepository;
 import com.nykdev.curse.services.exception.DatabaseException;
 import com.nykdev.curse.services.exception.ResourceNotFoundException;
+
+import javassist.bytecode.stackmap.BasicBlock.Catch;
 
  @Service
 public class UserService {
@@ -46,9 +50,14 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
+		try {
 		User entity = repository.getOne(id);
 		updateData(entity, obj);
 		return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+		
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {
